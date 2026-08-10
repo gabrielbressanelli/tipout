@@ -29,6 +29,7 @@ Tipout is a simple Django app for restaurant servers. Servers log in, enter shif
 - Mobile authenticated navigation uses a hamburger button with a left-side drawer.
 - Glass-style toast notifications for saved/deleted shifts, auto-dismissed after 4 seconds.
 - Paycheck history page at `/paychecks/` with last paid paycheck, last month, all-time, week, month, and custom range views.
+- Production static files are served with WhiteNoise from `STATIC_ROOT = BASE_DIR / "staticfiles"`.
 
 ## Business Rules
 

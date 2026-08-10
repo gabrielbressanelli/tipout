@@ -139,11 +139,17 @@ Recommended production start command:
 gunicorn settings.wsgi
 ```
 
-Before deploying to Railway, update `settings/settings.py` to read production database, allowed hosts, CSRF, and static file settings from environment variables.
+Before deploying to Railway, update `settings/settings.py` to read production database, allowed hosts, and CSRF from environment variables.
 
 ## Static Files
 
-The virtual environment already includes WhiteNoise. For production, configure `STATIC_ROOT`, WhiteNoise middleware, and compressed static file storage in `settings/settings.py`.
+The app uses WhiteNoise for production static files. Railway should run:
+
+```bash
+python manage.py collectstatic --noinput
+```
+
+before the app starts. Static output is collected into `staticfiles/`, which is intentionally ignored by git.
 
 ## Dependency Files
 
