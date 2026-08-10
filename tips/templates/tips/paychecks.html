@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block title %}Paychecks | Tipout{% endblock %}
+
+{% block content %}
+<section class="history-head">
+    <div>
+        <p class="eyebrow">Paycheck tracker</p>
+        <h1>Paycheck history</h1>
+        <p class="history-range">
+            {% if selected_range.start_date and selected_range.end_date %}
+                {{ selected_range.start_date|date:"M j, Y" }} - {{ selected_range.end_date|date:"M j, Y" }}
+            {% else %}
+                Every logged shift
+            {% endif %}
+            {% if selected_range.pay_date %}
+                <span>Paid {{ selected_range.pay_date|date:"M j, Y" }}</span>
+            {% endif %}
+        </p>
+    </div>
+    <article class="history-total">
+        <span>Total</span>
+        <strong>${{ stats.total|floatformat:2 }}</strong>
+        <small>10% tax paid: ${{ stats.tax_paid|floatformat:2 }}</small>
+    </article>
+</section>
+
+<section class="history-controls panel">
+    <div class="history-tabs" aria-label="Paycheck views">
+        <a class="{% if selected_range.selected_view == 'last_paycheck' %}active{% endif %}" href="{% url 'paycheck_history' %}?view=last_paycheck">Last paycheck</a>
+        <a class="{% if selected_range.selected_view == 'last_month' %}active{% endif %}" href="{% url 'paycheck_history' %}?view=last_month">Last month</a>
+        <a class="{% if selected_range.selected_view == 'all_time' %}active{% endif %}" href="{% url 'paycheck_history' %}?view=all_time">All time</a>
+    </div>
+
+    <div class="quick-pickers">
+        <form method="get">
+            <input type="hidden" name="view" value="week">
+            <label for="week-picker">Week</label>
+            <div class="picker-row">
+                <input id="week-picker" type="week" name="week" value="{{ week_value }}">
+                <button class="ghost-button" type="submit">View</button>
+            </div>
+        </form>
+        <form method="get">
+            <input type="hidden" name="view" value="month">
+            <label for="month-picker">Month</label>
+            <div class="picker-row">
+                <input id="month-picker" type="month" name="month" value="{{ month_value }}">
+                <button class="ghost-button" type="submit">View</button>
+            </div>
+        </form>
+        <form method="get">
+            <input type="hidden" name="view" value="custom">
+            <label for="custom-start">Custom range</label>
+            <div class="picker-row custom-range">
+                <input id="custom-start" type="date" name="start" value="{{ custom_start|date:'Y-m-d' }}">
+                <input id="custom-end" type="date" name="end" value="{{ custom_end|date:'Y-m-d' }}">
+                <button class="ghost-button" type="submit">View</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section class="insight-grid">
+    <article class="panel insight-card">
+        <span>Days worked</span>
+        <strong>{{ stats.days_worked }}</strong>
+        <small>Logged dates in this view</small>
+    </article>
+    <article class="panel insight-card">
+        <span>Average per day</span>
+        <strong>${{ stats.average_per_day|floatformat:2 }}</strong>
+        <small>Based on worked days only</small>
+    </article>
+    <article class="panel insight-card">
+        <span>Assistant tipout</span>
+        <strong>${{ stats.assistant_tipout|floatformat:2 }}</strong>
+        <small>Food-sales percentage</small>
+    </article>
+    <article class="panel insight-card">
+        <span>Bar tipout</span>
+        <strong>${{ stats.bar_tipout|floatformat:2 }}</strong>
+        <small>3% of liquor, beer, and wine</small>
+    </article>
+</section>
+
+<section class="history-grid">
+    <section class="panel history-panel">
+        <div class="section-title">
+            <h2>Logged dates</h2>
+            <p>{{ selected_range.title }} entries, newest first.</p>
+        </div>
+
+        {% if entries %}
+            <div class="history-table">
+                <div class="history-row history-row-head">
+                    <span>Date</span>
+                    <span>Gross</span>
+                    <span>Tipout</span>
+                    <span>Total</span>
+                </div>
+                {% for entry in entries %}
+                    <div class="history-row">
+                        <span>
+                            <strong>{{ entry.service_date|date:"M j" }}</strong>
+                            <small>{{ entry.assistant_percent }}% assistant</small>
+                        </span>
+                        <span>${{ entry.tips_made|floatformat:2 }}</span>
+                        <span>
+                            ${{ entry.total_tipout|floatformat:2 }}
+                            <small>A ${{ entry.assistant_tipout|floatformat:2 }} | B ${{ entry.bar_tipout|floatformat:2 }}</small>
+                        </span>
+                        <span class="history-row-total">${{ entry.net_tips|floatformat:2 }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h3>No shifts in this view</h3>
+                <p>Try another paycheck, month, week, or date range.</p>
+            </div>
+        {% endif %}
+    </section>
+
+    <aside class="history-side">
+        <section class="panel insight-detail">
+            <div>
+                <span>Gross tips</span>
+                <strong>${{ stats.gross_tips|floatformat:2 }}</strong>
+            </div>
+            <div>
+                <span>Total tipout</span>
+                <strong>${{ stats.total_tipout|floatformat:2 }}</strong>
+            </div>
+            <div>
+                <span>Food sales</span>
+                <strong>${{ stats.food_sales|floatformat:2 }}</strong>
+            </div>
+            <div>
+                <span>Alcohol sales</span>
+                <strong>${{ stats.alcohol_sales|floatformat:2 }}</strong>
+            </div>
+            <div>
+                <span>Best day</span>
+                {% if stats.highest_day %}
+                    <strong>${{ stats.highest_day.total|floatformat:2 }}</strong>
+                    <small>{{ stats.highest_day.date|date:"M j" }}</small>
+                {% else %}
+                    <strong>$0.00</strong>
+                {% endif %}
+            </div>
+            <div>
+                <span>Slowest day</span>
+                {% if stats.lowest_day %}
+                    <strong>${{ stats.lowest_day.total|floatformat:2 }}</strong>
+                    <small>{{ stats.lowest_day.date|date:"M j" }}</small>
+                {% else %}
+                    <strong>$0.00</strong>
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="panel monthly-panel">
+            <div class="section-title">
+                <h2>Month totals</h2>
+                <p>Tap a month to inspect it.</p>
+            </div>
+            {% if month_groups %}
+                <div class="month-list">
+                    {% for month in month_groups %}
+                        <a class="month-row" href="{% url 'paycheck_history' %}?view=month&month={{ month.month_value }}">
+                            <span>
+                                <strong>{{ month.month|date:"F Y" }}</strong>
+                                <small>{{ month.stats.days_worked }} worked day{{ month.stats.days_worked|pluralize }}</small>
+                            </span>
+                            <span>
+                                <strong>${{ month.stats.total|floatformat:2 }}</strong>
+                                <small>Tax ${{ month.stats.tax_paid|floatformat:2 }}</small>
+                            </span>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state compact-empty">
+                    <h3>No months yet</h3>
+                    <p>Month totals appear after shifts are logged.</p>
+                </div>
+            {% endif %}
+        </section>
+    </aside>
+</section>
+{% endblock %}

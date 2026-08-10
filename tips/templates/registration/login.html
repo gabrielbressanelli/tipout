@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Log in | Tipout{% endblock %}
+
+{% block content %}
+<section class="auth-layout">
+    <div class="auth-copy">
+        <p class="eyebrow">Server tip tracker</p>
+        <h1>Track the shift. Know the check.</h1>
+        <p>Log tips, sales, assistant percentage, and the exact amount headed to the next paycheck.</p>
+    </div>
+
+    <form class="panel auth-panel" method="post">
+        {% csrf_token %}
+        <h2>Log in</h2>
+        {% if form.non_field_errors %}
+            <div class="form-errors">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <label for="{{ form.username.id_for_label }}">Username</label>
+        {{ form.username }}
+        {{ form.username.errors }}
+
+        <label for="{{ form.password.id_for_label }}">Password</label>
+        {{ form.password }}
+        {{ form.password.errors }}
+
+        <button class="primary-button full-width" type="submit">Log in</button>
+        <p class="auth-switch"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+        <p class="auth-switch">New here? <a href="{% url 'signup' %}">Create an account</a></p>
+    </form>
+</section>
+{% endblock %}

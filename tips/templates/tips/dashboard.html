@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Tipout{% endblock %}
+
+{% block content %}
+<section class="dashboard-head">
+    <div>
+        <p class="eyebrow">Welcome{% if user.first_name %}, {{ user.first_name }}{% endif %}</p>
+        <h1>Tipout dashboard</h1>
+    </div>
+    <div class="paycheck-pill">
+        <span>Next paycheck</span> 
+        <strong>{{ paycheck.pay_date|date:"M j" }}</strong>
+    </div>
+</section>
+
+<section class="summary-grid">
+    <article class="panel metric-card accent-card">
+        <span class="metric-label">Estimated next paycheck</span>
+        <strong>${{ paycheck_total|floatformat:2 }}</strong>
+        <small>{{ paycheck.period_start|date:"M j" }} - {{ paycheck.period_end|date:"M j" }}</small>
+    </article>
+    <article class="panel metric-card">
+        <span class="metric-label">Logged for this check</span>
+        <strong>{{ paycheck_entries|length }}</strong>
+        <small>Shifts in the paid window</small>
+    </article>
+    <article class="panel metric-card">
+        <span class="metric-label">All logged net tips</span>
+        <strong>${{ all_time_total|floatformat:2 }}</strong>
+        <small>After assistant and bar tip-outs</small>
+    </article>
+</section>
+
+<section class="work-grid">
+    <form class="panel tip-form" method="post">
+        {% csrf_token %}
+        <div class="section-title">
+            <h2>Add shift</h2>
+            <p>Assistant tip-out uses food sales only. Bar tip-out is always 3% of liquor, beer, and wine.</p>
+        </div>
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="form-grid">
+            <div class="field">
+                <label for="{{ form.service_date.id_for_label }}">{{ form.service_date.label }}</label>
+                {{ form.service_date }}
+                {{ form.service_date.errors }}
+            </div>
+            <div class="field">
+                <label for="{{ form.tips_made.id_for_label }}">{{ form.tips_made.label }}</label>
+                {{ form.tips_made }}
+                {{ form.tips_made.errors }}
+            </div>
+            <div class="field">
+                <label for="{{ form.total_sales.id_for_label }}">{{ form.total_sales.label }}</label>
+                {{ form.total_sales }}
+                {{ form.total_sales.errors }}
+            </div>
+            <div class="field">
+                <label for="{{ form.liquor_sales.id_for_label }}">{{ form.liquor_sales.label }}</label>
+                {{ form.liquor_sales }}
+                {{ form.liquor_sales.errors }}
+            </div>
+            <div class="field">
+                <label for="{{ form.beer_sales.id_for_label }}">{{ form.beer_sales.label }}</label>
+                {{ form.beer_sales }}
+                {{ form.beer_sales.errors }}
+            </div>
+            <div class="field">
+                <label for="{{ form.wine_sales.id_for_label }}">{{ form.wine_sales.label }}</label>
+                {{ form.wine_sales }}
+                {{ form.wine_sales.errors }}
+            </div>
+        </div>
+
+        <fieldset class="assistant-toggle">
+            <legend>{{ form.assistant_percent.label }}</legend>
+            {{ form.assistant_percent }}
+            {{ form.assistant_percent.errors }}
+        </fieldset>
+
+        <button class="primary-button full-width" type="submit">Save shift</button>
+    </form>
+
+    <section class="panel log-panel">
+        <div class="section-title">
+            <h2>Recent log</h2>
+            <p>Net tips are gross tips minus assistant and bar tip-outs.</p>
+        </div>
+
+        {% if entries %}
+            <div class="entry-list">
+                {% for entry in entries %}
+                    <article class="entry-row">
+                        <div>
+                            <strong>{{ entry.service_date|date:"M j" }}</strong>
+                            <span>{{ entry.assistant_percent }}% assistant on ${{ entry.total_sales|floatformat:2 }} food | 3% bar on ${{ entry.alcohol_sales|floatformat:2 }}</span>
+                        </div>
+                        <div class="entry-money">
+                            <strong>${{ entry.net_tips|floatformat:2 }}</strong>
+                            <small>Tip-out ${{ entry.total_tipout|floatformat:2 }}</small>
+                        </div>
+                        <form method="post" action="{% url 'delete_entry' entry.id %}">
+                            {% csrf_token %}
+                            <button class="icon-button" type="submit" aria-label="Delete {{ entry.service_date|date:'M j' }} shift">Delete</button>
+                        </form>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h3>No shifts logged yet</h3>
+                <p>Add your first shift to see paycheck totals.</p>
+            </div>
+        {% endif %}
+    </section>
+</section>
+{% endblock %}
