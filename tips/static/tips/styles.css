@@ -1102,6 +1102,7 @@ input:focus {
     body {
         height: 100%;
         overflow: hidden;
+        background: var(--bg);
     }
 
     .app-shell {
