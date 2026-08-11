@@ -96,16 +96,16 @@ a {
     align-items: center;
     color: var(--ink);
     display: inline-flex;
-    height: 42px;
-    max-width: 148px;
+    height: 110px;
+    max-width: 300px;
     overflow: hidden;
 }
 
 .brand-logo {
     display: block;
     height: 100%;
-    max-height: 42px;
-    max-width: 148px;
+    max-height: 110px;
+    max-width: 300px;
     object-fit: contain;
     object-position: left center;
     width: 100%;
@@ -115,7 +115,7 @@ a {
     display: block;
     height: auto;
     margin: 0 0 16px;
-    max-height: 86px;
+    max-height: 100px;
     max-width: min(240px, 72vw);
     object-fit: contain;
     object-position: left center;
@@ -1104,18 +1104,18 @@ input:focus {
     }
 
     .brand {
-        height: 32px;
-        max-width: 104px;
+        height: 80px;
+        max-width: 200px;
     }
 
     .brand-logo {
-        max-height: 32px;
-        max-width: 104px;
+        max-height: 80px;
+        max-width: 200px;
     }
 
     .auth-logo {
-        max-height: 54px;
-        max-width: min(150px, 54vw);
+        max-height: 80px;
+        max-width: min(200px, 54vw);
     }
 
     .auth-panel,
