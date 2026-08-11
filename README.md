@@ -89,6 +89,7 @@ SECRET_KEY=your-production-secret
 DEBUG=False
 ALLOWED_HOSTS=your-domain.com
 CSRF_TRUSTED_ORIGINS=https://your-domain.com
+RAILWAY_PUBLIC_DOMAIN=your-railway-domain
 ```
 
 For SendGrid password reset email:
@@ -117,6 +118,8 @@ Recommended Railway variables:
 ```bash
 SECRET_KEY=your-production-secret
 DEBUG=False
+ALLOWED_HOSTS=tipout.gabrielbressanelli.online
+CSRF_TRUSTED_ORIGINS=https://tipout.gabrielbressanelli.online
 SENDGRID_API_KEY=your-sendgrid-api-key
 SENDGRID_API_URL=https://api.sendgrid.com/v3/mail/send
 DEFAULT_FROM_EMAIL=no-reply@yourdomain.com
@@ -140,6 +143,7 @@ gunicorn settings.wsgi
 ```
 
 Before deploying to Railway, update `settings/settings.py` to read production database, allowed hosts, and CSRF from environment variables.
+The current settings use SQLite locally and switch to Railway Postgres automatically when `PGDATABASE`, `PGUSER`, `PGPASSWORD`, `PGHOST`, and `PGPORT` are present.
 
 ## Static Files
 

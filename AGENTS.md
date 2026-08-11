@@ -7,7 +7,7 @@ Tipout is a simple Django app for restaurant servers. Servers log in, enter shif
 ## Current Stack
 
 - Python with Django 6.0.3.
-- SQLite database at `db.sqlite3` for local development.
+- SQLite database at `db.sqlite3` for local development; production uses Postgres when Railway `PG...` variables exist.
 - Main Django app: `tips`.
 - Settings package: `settings`.
 
