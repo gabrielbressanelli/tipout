@@ -1118,7 +1118,7 @@ input:focus {
         margin-bottom: 0;
         padding: env(safe-area-inset-top) 14px 18px;
         position: sticky;
-        top: 0;
+        top: -20;
         z-index: 20;
     }
 
