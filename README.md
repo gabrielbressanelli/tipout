@@ -157,6 +157,8 @@ python manage.py collectstatic --noinput
 
 before the app starts. Static output is collected into `staticfiles/`, which is intentionally ignored by git.
 
+The app also enables `WHITENOISE_USE_FINDERS=True` by default so static files can still be served from app static directories if Railway skips `collectstatic`. `collectstatic` is still preferred for production.
+
 ## Dependency Files
 
 - `requirements.txt`: standard file for deployment platforms.
