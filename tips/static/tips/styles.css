@@ -1104,18 +1104,18 @@ input:focus {
     }
 
     .brand {
-        height: 38px;
-        max-width: 126px;
+        height: 32px;
+        max-width: 104px;
     }
 
     .brand-logo {
-        max-height: 38px;
-        max-width: 126px;
+        max-height: 32px;
+        max-width: 104px;
     }
 
     .auth-logo {
-        max-height: 72px;
-        max-width: min(210px, 70vw);
+        max-height: 54px;
+        max-width: min(150px, 54vw);
     }
 
     .auth-panel,
