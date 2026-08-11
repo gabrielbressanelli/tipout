@@ -1145,6 +1145,10 @@ input:focus {
         max-width: 200px;
     }
 
+    .auth-layout {
+        padding-top: 25px;
+    }
+
     .auth-logo {
         max-height: 80px;
         max-width: min(200px, 54vw);
