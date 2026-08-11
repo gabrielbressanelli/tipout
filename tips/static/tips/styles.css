@@ -1100,18 +1100,17 @@ input:focus {
 @media (max-width: 560px) {
     html,
     body {
-        height: 100%;
-        overflow: hidden;
+        margin: 0;
+        min-height: 100%;
         background-color: var(--bg);
         background-image: none;
     }
 
     .app-shell {
-        display: grid;
-        grid-template-rows: auto minmax(0, 1fr);
-        height: 100dvh;
-        padding: 0;
         width: 100%;
+        min-height: 100dvh;
+        padding: 0;
+        background: var(--bg);
     }
 
     .topbar {
@@ -1119,22 +1118,20 @@ input:focus {
         background: var(--bg);
         display: flex;
         margin-bottom: 0;
-    
+
         padding:
-            calc(env(safe-area-inset-top))
+            env(safe-area-inset-top)
             14px
             5px;
-    
+
         position: sticky;
         top: 0;
         z-index: 20;
     }
 
     main {
-        min-height: 0;
-        overflow-y: auto;
+        background: var(--bg);
         padding: 8px 14px max(22px, env(safe-area-inset-bottom));
-        -webkit-overflow-scrolling: touch;
     }
 
     .brand {
