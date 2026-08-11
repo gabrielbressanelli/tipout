@@ -1102,7 +1102,8 @@ input:focus {
     body {
         height: 100%;
         overflow: hidden;
-        background: var(--bg);
+        background-color: var(--bg);
+        background-image: none;
     }
 
     .app-shell {
