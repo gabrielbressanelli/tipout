@@ -65,7 +65,7 @@ class TipEntryForm(forms.ModelForm):
         }
         labels = {
             'tips_made': 'Tips made',
-            'total_sales': 'Food sales',
+            'total_sales': 'Total sales',
             'liquor_sales': 'Liquor sales',
             'beer_sales': 'Beer sales',
             'wine_sales': 'Wine sales',
