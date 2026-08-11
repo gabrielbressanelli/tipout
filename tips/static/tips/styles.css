@@ -1100,15 +1100,14 @@ input:focus {
 @media (max-width: 560px) {
     html,
     body {
-        height: 100%;
-        overflow: hidden;
+        height: auto;
+        overflow: visible;
     }
 
     .app-shell {
-        display: grid;
-        grid-template-rows: auto minmax(0, 1fr);
-        height: 100dvh;
-        padding: 0;
+        display: block;
+        min-height: 100dvh;
+        padding: 0 0 14px;
         width: 100%;
     }
 
@@ -1118,15 +1117,15 @@ input:focus {
         display: flex;
         margin-bottom: 0;
         padding: env(safe-area-inset-top) 14px 18px;
-        position: relative;
+        position: sticky;
+        top: 0;
         z-index: 20;
     }
 
     main {
         min-height: 0;
-        overflow-y: auto;
-        padding: 8px 14px max(22px, env(safe-area-inset-bottom));
-        -webkit-overflow-scrolling: touch;
+        overflow: visible;
+        padding: 8px 14px 22px;
     }
 
     .brand {
