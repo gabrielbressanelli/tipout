@@ -60,6 +60,7 @@ Tipout is a simple Django app for restaurant servers. Servers log in, enter shif
 - `README.md`: project setup, commands, environment variables, and Railway notes.
 - `requirements.txt`: standard dependency file generated from `.venv`.
 - `requirement.txt`: duplicate dependency file requested by the user.
+- `nixpacks.toml`: Railway build/start config; runs `collectstatic`, `migrate`, then Gunicorn.
 
 ## Local Commands
 

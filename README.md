@@ -139,8 +139,10 @@ PGPORT=${{Postgres.PGPORT}}
 Recommended production start command:
 
 ```bash
-gunicorn settings.wsgi
+gunicorn settings.wsgi:application --bind 0.0.0.0:$PORT
 ```
+
+This repo includes `nixpacks.toml` for Railway. It runs `collectstatic` during the build and runs migrations before Gunicorn starts.
 
 Before deploying to Railway, update `settings/settings.py` to read production database, allowed hosts, and CSRF from environment variables.
 The current settings use SQLite locally and switch to Railway Postgres automatically when `PGDATABASE`, `PGUSER`, `PGPASSWORD`, `PGHOST`, and `PGPORT` are present.
