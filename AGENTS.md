@@ -27,6 +27,7 @@ Tipout is a simple Django app for restaurant servers. Servers log in, enter shif
 - Recent shift log with delete action.
 - Mobile-first templates and CSS.
 - Mobile authenticated navigation uses a hamburger button with a left-side drawer.
+- Brand assets live in `tips/static/tips/brand/`; header/auth pages use `logo.png`, and favicon links use the generated favicon package.
 - Glass-style toast notifications for saved/deleted shifts, auto-dismissed after 4 seconds.
 - Paycheck history page at `/paychecks/` with last paid paycheck, last month, all-time, week, month, and custom range views.
 - Production static files are served with WhiteNoise. `collectstatic` is preferred, but `WHITENOISE_USE_FINDERS=True` is enabled by default so app static files can still serve if Railway skips static collection.

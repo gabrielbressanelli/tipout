@@ -1,11 +1,13 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Sign up | Tipout{% endblock %}
 
 {% block content %}
 <section class="auth-layout">
     <div class="auth-copy">
-        <p class="eyebrow">Tipout for servers</p>
+        <img class="auth-logo" src="{% static 'tips/brand/logo.png' %}" alt="Tipout">
+        <p class="eyebrow">For servers</p>
         <h1>Set up your account in one minute.</h1>
         <p>Your shift logs stay tied to your login, so paycheck totals are always personal.</p>
     </div>

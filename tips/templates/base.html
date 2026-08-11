@@ -5,6 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
     <title>{% block title %}Tipout{% endblock %}</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'tips/brand/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'tips/brand/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'tips/brand/favicon-16x16.png' %}">
+    <link rel="shortcut icon" href="{% static 'tips/brand/favicon.ico' %}">
+    <link rel="manifest" href="{% static 'tips/brand/site.webmanifest' %}">
+    <meta name="theme-color" content="#0e766e">
     <link rel="stylesheet" href="{% static 'tips/styles.css' %}">
     <script src="{% static 'tips/toasts.js' %}" defer></script>
     <script src="{% static 'tips/nav.js' %}" defer></script>
@@ -26,8 +32,7 @@
     <div class="app-shell">
         <header class="topbar">
             <a class="brand" href="{% url 'dashboard' %}">
-                <span class="brand-mark">T</span>
-                <span>Tipout</span>
+                <img class="brand-logo" src="{% static 'tips/brand/logo.png' %}" alt="Tipout">
             </a>
             {% if user.is_authenticated %}
                 <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">

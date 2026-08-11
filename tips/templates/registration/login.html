@@ -1,10 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Log in | Tipout{% endblock %}
 
 {% block content %}
 <section class="auth-layout">
     <div class="auth-copy">
+        <img class="auth-logo" src="{% static 'tips/brand/logo.png' %}" alt="Tipout">
         <p class="eyebrow">Server tip tracker</p>
         <h1>Track the shift. Know the check.</h1>
         <p>Log tips, sales, assistant percentage, and the exact amount headed to the next paycheck.</p>

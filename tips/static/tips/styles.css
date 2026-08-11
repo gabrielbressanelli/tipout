@@ -96,20 +96,22 @@ a {
     align-items: center;
     color: var(--ink);
     display: inline-flex;
-    font-size: 1.05rem;
-    gap: 10px;
+    min-height: 42px;
 }
 
-.brand-mark {
-    align-items: center;
-    background: var(--ink);
-    border-radius: 8px;
-    color: white;
-    display: inline-flex;
-    font-weight: 800;
-    height: 34px;
-    justify-content: center;
-    width: 34px;
+.brand-logo {
+    display: block;
+    height: 42px;
+    object-fit: contain;
+    width: auto;
+}
+
+.auth-logo {
+    display: block;
+    height: clamp(72px, 14vw, 112px);
+    margin: 0 0 18px;
+    object-fit: contain;
+    width: auto;
 }
 
 .ghost-button,
