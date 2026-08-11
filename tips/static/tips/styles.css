@@ -1119,9 +1119,9 @@ input:focus {
         margin-bottom: 0;
     
         padding:
-            calc(env(safe-area-inset-top) + 10px)
+            calc(env(safe-area-inset-top))
             14px
-            18px;
+            5px;
     
         position: sticky;
         top: 0;
