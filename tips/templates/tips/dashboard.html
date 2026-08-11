@@ -37,7 +37,7 @@
         {% csrf_token %}
         <div class="section-title">
             <h2>Add shift</h2>
-            <p>Assistant tip-out uses food sales only. Bar tip-out is always 3% of liquor, beer, and wine.</p>
+            <p>Assistant tip-out uses total sales. Bar tip-out is always 3% of only liquor, beer, and wine.</p>
         </div>
 
         {% if form.non_field_errors %}

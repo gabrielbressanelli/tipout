@@ -139,7 +139,7 @@ PGPORT=${{Postgres.PGPORT}}
 Recommended production start command:
 
 ```bash
-gunicorn settings.wsgi:application --bind 0.0.0.0:$PORT
+gunicorn settings.wsgi:application --bind 0.0.0.0:${PORT:-8080}
 ```
 
 This repo includes `nixpacks.toml` for Railway. It runs `collectstatic` during the build and runs migrations before Gunicorn starts.
