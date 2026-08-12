@@ -14,7 +14,7 @@ Tipout is a simple Django app for restaurant servers. Servers log in, enter shif
 ## Current Features
 
 - Server signup, login, and logout.
-- Password reset flow using Django auth views and a custom SendGrid HTTP email backend.
+- Password reset flow using Django auth views and a custom Resend HTTP email backend.
 - Authenticated dashboard at `/`.
 - Shift entry form with:
   - service date
@@ -53,7 +53,7 @@ Tipout is a simple Django app for restaurant servers. Servers log in, enter shif
 - `tips/views.py`: also contains paycheck-history date range and reporting helpers.
 - `settings/urls.py`: app, auth, and admin routes.
 - `tips/templates/`: base, auth, and dashboard templates.
-- `tips/email_backends.py`: SendGrid Mail Send API backend using environment variables.
+- `tips/email_backends.py`: Resend Email API backend using environment variables.
 - `tips/static/tips/styles.css`: responsive styling.
 - `tips/static/tips/toasts.js`: timed toast notification behavior.
 - `tips/static/tips/nav.js`: mobile drawer navigation behavior.
@@ -69,7 +69,7 @@ Tipout is a simple Django app for restaurant servers. Servers log in, enter shif
 - Run tests: `python3 manage.py test`
 - Apply migrations: `python3 manage.py migrate`
 - Start dev server: `python3 manage.py runserver 127.0.0.1:8000`
-- SendGrid variables: `SENDGRID_API_KEY`, `SENDGRID_API_URL`, `DEFAULT_FROM_EMAIL`, `SENDGRID_FROM_NAME`.
+- Resend variables: `RESEND_API_KEY`, `RESEND_API_URL`, `DEFAULT_FROM_EMAIL`.
 
 ## Verification From Initial Build
 

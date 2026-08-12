@@ -165,11 +165,10 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
 
-EMAIL_BACKEND = 'tips.email_backends.SendGridEmailBackend'
-SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY', '')
-SENDGRID_API_URL = os.environ.get('SENDGRID_API_URL', 'https://api.sendgrid.com/v3/mail/send')
+EMAIL_BACKEND = 'tips.email_backends.ResendEmailBackend'
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
+RESEND_API_URL = os.environ.get('RESEND_API_URL', 'https://api.resend.com/emails')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'no-reply@tipout.local')
-SENDGRID_FROM_NAME = os.environ.get('SENDGRID_FROM_NAME', 'Tipout')
 PASSWORD_RESET_TIMEOUT = 60 * 60
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

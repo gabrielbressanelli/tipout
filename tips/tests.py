@@ -7,7 +7,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 
-from .email_backends import SendGridEmailBackend
+from .email_backends import ResendEmailBackend
 from .models import TipEntry, current_paycheck_window, next_pay_date, paycheck_window
 from .models import Profile
 from .views import _last_paid_pay_date, _stats_for_entries
@@ -141,12 +141,11 @@ class PasswordResetEmailTests(TestCase):
         self.assertIn('/reset/', mail.outbox[0].body)
 
     @override_settings(
-        SENDGRID_API_KEY='test-key',
-        SENDGRID_API_URL='https://api.sendgrid.test/v3/mail/send',
+        RESEND_API_KEY='test-key',
+        RESEND_API_URL='https://api.resend.test/emails',
         DEFAULT_FROM_EMAIL='Tipout <no-reply@example.com>',
-        SENDGRID_FROM_NAME='Tipout',
     )
-    def test_sendgrid_backend_posts_mail_send_payload(self):
+    def test_resend_backend_posts_email_payload(self):
         message = EmailMultiAlternatives(
             subject='Reset your Tipout password',
             body='Plain reset link',
@@ -160,12 +159,13 @@ class PasswordResetEmailTests(TestCase):
         response.__exit__ = Mock(return_value=None)
 
         with patch('tips.email_backends.urlopen', return_value=response) as mocked_urlopen:
-            sent = SendGridEmailBackend().send_messages([message])
+            sent = ResendEmailBackend().send_messages([message])
 
         self.assertEqual(sent, 1)
         request = mocked_urlopen.call_args.args[0]
-        self.assertEqual(request.full_url, 'https://api.sendgrid.test/v3/mail/send')
+        self.assertEqual(request.full_url, 'https://api.resend.test/emails')
         self.assertEqual(request.headers['Authorization'], 'Bearer test-key')
-        self.assertIn(b'"personalizations"', request.data)
-        self.assertIn(b'"text/html"', request.data)
+        self.assertIn(b'"from": "Tipout <no-reply@example.com>"', request.data)
+        self.assertIn(b'"to": ["server@example.com"]', request.data)
+        self.assertIn(b'"html": "<strong>Reset</strong>"', request.data)
         self.assertIn(b'"server@example.com"', request.data)

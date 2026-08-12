@@ -1,5 +1,4 @@
 import json
-from email.utils import parseaddr
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -8,7 +7,7 @@ from django.core.mail.backends.base import BaseEmailBackend
 from django.core.mail.message import EmailMultiAlternatives
 
 
-class SendGridEmailBackend(BaseEmailBackend):
+class ResendEmailBackend(BaseEmailBackend):
     def send_messages(self, email_messages):
         if not email_messages:
             return 0
@@ -20,18 +19,19 @@ class SendGridEmailBackend(BaseEmailBackend):
         return sent_count
 
     def _send_message(self, message):
-        api_key = settings.SENDGRID_API_KEY
+        api_key = settings.RESEND_API_KEY
         if not api_key:
             if self.fail_silently:
                 return False
-            raise ValueError('SENDGRID_API_KEY is required to send email.')
+            raise ValueError('RESEND_API_KEY is required to send email.')
 
         request = Request(
-            settings.SENDGRID_API_URL,
+            settings.RESEND_API_URL,
             data=json.dumps(self._payload(message)).encode('utf-8'),
             headers={
                 'Authorization': f'Bearer {api_key}',
                 'Content-Type': 'application/json',
+                'User-Agent': 'Tipout Django Password Reset',
             },
             method='POST',
         )
@@ -45,33 +45,18 @@ class SendGridEmailBackend(BaseEmailBackend):
             raise
 
     def _payload(self, message):
-        from_email, from_name = self._email_parts(message.from_email or settings.DEFAULT_FROM_EMAIL)
-        if not from_name:
-            from_name = settings.SENDGRID_FROM_NAME
-
-        content = [
-            {
-                'type': 'text/plain',
-                'value': message.body or 'Open the password reset link to continue.',
-            }
-        ]
         html_body = self._html_body(message)
-        if html_body:
-            content.append({'type': 'text/html', 'value': html_body})
-
-        return {
-            'personalizations': [
-                {
-                    'to': [{'email': email} for email in message.to],
-                    'subject': ''.join(message.subject.splitlines()),
-                }
-            ],
-            'from': {
-                'email': from_email,
-                'name': from_name,
-            },
-            'content': content,
+        payload = {
+            'from': message.from_email or settings.DEFAULT_FROM_EMAIL,
+            'to': message.to,
+            'subject': ''.join(message.subject.splitlines()),
+            'text': message.body or 'Open the password reset link to continue.',
         }
+
+        if html_body:
+            payload['html'] = html_body
+
+        return payload
 
     def _html_body(self, message):
         if isinstance(message, EmailMultiAlternatives):
@@ -80,7 +65,3 @@ class SendGridEmailBackend(BaseEmailBackend):
                 if mimetype == 'text/html':
                     return content
         return None
-
-    def _email_parts(self, value):
-        name, email = parseaddr(value)
-        return email or value, name

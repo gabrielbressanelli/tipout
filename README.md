@@ -12,7 +12,7 @@ Tipout is a Django app for restaurant servers to track shift tips, food sales, a
 - Paycheck history with last paid paycheck, last month, all time, week, month, and custom date range views.
 - 10% tax paid display for history totals.
 - Mobile-first layout with hamburger drawer navigation.
-- SendGrid HTTP email backend for password reset email.
+- Resend HTTP email backend for password reset email.
 
 ## Business Rules
 
@@ -92,16 +92,15 @@ CSRF_TRUSTED_ORIGINS=https://your-domain.com
 RAILWAY_PUBLIC_DOMAIN=your-railway-domain
 ```
 
-For SendGrid password reset email:
+For Resend password reset email:
 
 ```bash
-SENDGRID_API_KEY=your-sendgrid-api-key
-SENDGRID_API_URL=https://api.sendgrid.com/v3/mail/send
+RESEND_API_KEY=your-resend-api-key
+RESEND_API_URL=https://api.resend.com/emails
 DEFAULT_FROM_EMAIL=no-reply@yourdomain.com
-SENDGRID_FROM_NAME=Tipout
 ```
 
-`DEFAULT_FROM_EMAIL` must be a verified sender in SendGrid.
+`DEFAULT_FROM_EMAIL` must be from a verified domain or sender in Resend.
 
 ## Railway Deployment Notes
 
@@ -120,10 +119,9 @@ SECRET_KEY=your-production-secret
 DEBUG=False
 ALLOWED_HOSTS=tipout.gabrielbressanelli.online
 CSRF_TRUSTED_ORIGINS=https://tipout.gabrielbressanelli.online
-SENDGRID_API_KEY=your-sendgrid-api-key
-SENDGRID_API_URL=https://api.sendgrid.com/v3/mail/send
+RESEND_API_KEY=your-resend-api-key
+RESEND_API_URL=https://api.resend.com/emails
 DEFAULT_FROM_EMAIL=no-reply@yourdomain.com
-SENDGRID_FROM_NAME=Tipout
 ```
 
 If using Railway Postgres, connect these variables from the Postgres service:
