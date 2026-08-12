@@ -1141,6 +1141,7 @@ input:focus {
 
     main {
         background: var(--bg);
+        padding: 8px 14px 0;
     }
 
     .brand {
@@ -1154,7 +1155,7 @@ input:focus {
     }
 
     .auth-layout {
-        padding-top: 50px;
+        padding-top: 75px;
     }
 
     .auth-logo {
