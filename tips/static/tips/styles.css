@@ -1125,13 +1125,23 @@ input:focus {
             5px;
 
         position: sticky;
-        top: 0;
+        top: -1px;
         z-index: 20;
+    }
+
+    .topbar::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--bg);
     }
 
     main {
         background: var(--bg);
-        padding: 8px 14px max(22px, env(safe-area-inset-bottom));
+        padding: 8px 14px 22px;
     }
 
     .brand {
