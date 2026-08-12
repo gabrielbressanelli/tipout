@@ -1098,17 +1098,8 @@ input:focus {
 }
 
 @media (max-width: 560px) {
-    html,
-    body {
-        margin: 0;
-        min-height: 100%;
-        background-color: var(--bg);
-        background-image: none;
-    }
-
     .app-shell {
         width: 100%;
-        min-height: 0;
         padding: 0;
     }
 
@@ -1119,9 +1110,9 @@ input:focus {
         margin-bottom: 0;
 
         padding:
-            env(safe-area-inset-top)
+            max(4px, calc(env(safe-area-inset-top) - 28px))
             14px
-            5px;
+            8px;
 
         position: sticky;
         top: -1px;
