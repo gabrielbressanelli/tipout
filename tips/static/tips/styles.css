@@ -988,6 +988,11 @@ input:focus {
         width: 44px;
     }
 
+    body.is-authenticated .menu-toggle {
+        background: rgba(255, 255, 255, 0.42);
+        box-shadow: none;
+    }
+
     .menu-toggle span {
         background: var(--ink);
         border-radius: 999px;
@@ -1098,6 +1103,14 @@ input:focus {
 }
 
 @media (max-width: 560px) {
+    body {
+        min-height: 0;
+    }
+
+    body.is-authenticated {
+        background: var(--bg);
+    }
+
     .app-shell {
         width: 100%;
         padding: 0;
@@ -1127,6 +1140,11 @@ input:focus {
         right: 0;
         height: 3px;
         background: var(--bg);
+    }
+
+    body.is-authenticated .topbar::before {
+        top: calc(-1 * env(safe-area-inset-top));
+        height: calc(env(safe-area-inset-top) + 4px);
     }
 
     main {

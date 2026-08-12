@@ -11,11 +11,11 @@
     <link rel="shortcut icon" href="{% static 'tips/brand/favicon.ico' %}">
     <link rel="manifest" href="{% static 'tips/brand/site.webmanifest' %}">
     <meta name="theme-color" content="#f4f7f8">
-    <link rel="stylesheet" href="{% static 'tips/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'tips/styles.css' %}?v=20260812-4">
     <script src="{% static 'tips/toasts.js' %}" defer></script>
     <script src="{% static 'tips/nav.js' %}" defer></script>
 </head>
-<body>
+<body class="{% if user.is_authenticated %}is-authenticated{% else %}is-public{% endif %}">
     {% if messages %}
         <div class="toast-region" aria-live="polite" aria-label="Notifications">
             {% for message in messages %}
